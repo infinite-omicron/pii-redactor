@@ -1,4 +1,4 @@
-# PII Redactor
+# Personally Identifiable Information (PII) Redactor
 
 ## License
 
