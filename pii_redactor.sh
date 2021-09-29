@@ -1,7 +1,38 @@
-#!/bin/bash  
+#!/bin/bash
 
+#varibles in use
+version="0.2"
 yml="cluster.yml"
 REDACT="****************"
+
+#WIP
+debug=0
+verbose=0
+
+
+case $1 in 
+  -h|--help) 
+    cat <<EOF
+USAGE: 
+$0 [command]
+
+COMMANDS:
+  -h, --help            Show this message and quit
+  -d, --debug           Output debug messages
+  -v, --verbose         verbose mode
+  -ver, --version       Print version and exit
+EOF
+    ;;
+  -d|--debug)
+    debug=1
+    ;;
+  -v|--verbose)
+    verbose=1
+    ;;
+  -ver|--version)
+    echo "PII_Redaction.sh version is ${version}"
+    ;;
+esac
 
 sed -e " /#.*/ d;
 s/\(address: \)\(.*\)/\1$REDACT/;
