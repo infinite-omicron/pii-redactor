@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#varibles in use
+# variables in use
 version="0.2"
 yml="cluster.yml"
 REDACT="****************"
