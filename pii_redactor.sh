@@ -33,7 +33,7 @@ case ${1} in
     echo "Verbose is on"
     ;;
   -ver|--version)
-    echo "PII_Redaction.sh version is ${version}"
+    echo "pii-redactor version ${version}"
     ;;
   *) echo "Invalid Input"
    ;;
