@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# varibles in use
-version="0.2"
+# variables in use
+version="0.0.3"
 yml="cluster.yml"
 REDACT="****************"
 debug=0
