@@ -1,37 +1,42 @@
 #!/bin/bash
 
-#varibles in use
+# varibles in use
 version="0.2"
 yml="cluster.yml"
 REDACT="****************"
-
-#WIP
 debug=0
 verbose=0
 
-
-case $1 in 
-  -h|--help) 
-    cat <<EOF
+usage() {
+cat <<EOF
 USAGE: 
 $0 [command]
 
 COMMANDS:
-  -h, --help            Show this message and quit
+  -h, --help            Show this message
   -d, --debug           Output debug messages
   -v, --verbose         verbose mode
-  -ver, --version       Print version and exit
+  -ver, --version       Print version
 EOF
+}
+
+case ${1} in 
+  -h|--help) 
+    usage
     ;;
   -d|--debug)
     debug=1
-    ;;
+    echo "Debug is on"
+    ;;   
   -v|--verbose)
     verbose=1
+    echo "Verbose is on"
     ;;
   -ver|--version)
     echo "PII_Redaction.sh version is ${version}"
     ;;
+  *) echo "Invalid Input"
+   ;;
 esac
 
 sed -e " /#.*/ d;
