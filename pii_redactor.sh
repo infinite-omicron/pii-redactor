@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -eu
 # variables in use
 version="0.0.3"
 yml="cluster.yml"
