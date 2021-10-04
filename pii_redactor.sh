@@ -4,8 +4,6 @@ set -eu
 version="0.0.3"
 yml="cluster.yml"
 REDACT="****************"
-debug=0
-verbose=0
 
 usage() {
 cat <<EOF
@@ -23,14 +21,6 @@ EOF
 case ${1} in 
   -h|--help) 
     usage
-    ;;
-  -d|--debug)
-    debug=1
-    echo "Debug is on"
-    ;;   
-  -v|--verbose)
-    verbose=1
-    echo "Verbose is on"
     ;;
   -ver|--version)
     echo "pii-redactor version ${version}"
