@@ -1,0 +1,21 @@
+name: Shellchecker
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install shellcheck
+        # from https://github.com/koalaman/shellcheck#user-content-installing
+        run: sudo apt install shellcheck
+
+      - name: using shellcheck
+        run:  shellcheck pii_redactor.sh
