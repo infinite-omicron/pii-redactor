@@ -15,7 +15,7 @@ jobs:
 
       - name: install shellcheck
         # from https://github.com/koalaman/shellcheck#user-content-installing
-        run: sudo apt install shellcheck
+        run: sudo apt install -y shellcheck
 
       - name: using shellcheck
         run:  shellcheck pii_redactor.sh
