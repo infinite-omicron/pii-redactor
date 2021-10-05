@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 # variables in use
-version="0.0.4"
+version="0.0.1"
 yml="cluster.yml"
 REDACT="****************"
 debug=0
