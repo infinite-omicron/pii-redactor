@@ -2,11 +2,12 @@
 set -eu
 # variables in use
 version="0.0.1"
-yml="cluster.yml"
-REDACT="****************"
+yml=$(find -name "cluster.yml")
+REDACT="**********"
 debug=0
 verbose=0
 
+# in official version redacted_clus will be gone
 sedcom() { 
 sed -e "s/\(address: \)\(.*\)/\1$REDACT/;
 s/\(user: \)\(.*\)/\1$REDACT/;
@@ -14,10 +15,9 @@ s/\(ssh_key_path: \)\(.*\)/\1$REDACT/;
 s/\(ssh_cert_path: \)\(.*\)/\1$REDACT/;
 s/\(hostname_override: \)\(.*\)/\1$REDACT/;
 s/\(internal_address: \)\(.*\)/\1$REDACT/;
-s/\(key: \)\(.*\)/\1$REDACT/;
+1,/ key:.*/{s// key: $REDACT/};
 /-----BEGIN/,/-----END/{/-----BEGIN/n;/-----END/!{s/./        $REDACT/}};" $yml > redacted_clus.yml
 }
-
 
 usage() {
 cat <<EOF
