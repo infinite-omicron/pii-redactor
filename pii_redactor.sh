@@ -2,7 +2,8 @@
 set -eu
 # variables in use
 version="0.0.1"
-yml=$(find -name "cluster.yml")
+dir=$2
+yml=$(find $dir -name "cluster.yml")
 REDACT="**********"
 debug=0
 verbose=0
