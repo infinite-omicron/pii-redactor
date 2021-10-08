@@ -2,13 +2,14 @@
 set -eu
 # variables in use
 version="0.0.1"
-yml=$(find -name "cluster.yml")
 REDACT="**********"
 debug=0
 verbose=0
 
-# in official version redacted_clus will be gone
-sedcom() { 
+
+# official version will write to actual .yml
+
+yml=$(find -name "cluster.yml") 
 sed -e "s/\(address: \)\(.*\)/\1$REDACT/;
 s/\(user: \)\(.*\)/\1$REDACT/;
 s/\(ssh_key_path: \)\(.*\)/\1$REDACT/;
@@ -17,15 +18,15 @@ s/\(hostname_override: \)\(.*\)/\1$REDACT/;
 s/\(internal_address: \)\(.*\)/\1$REDACT/;
 1,/ key:.*/{s// key: $REDACT/};
 /-----BEGIN/,/-----END/{/-----BEGIN/n;/-----END/!{s/./        $REDACT/}};" $yml > redacted_clus.yml
-}
+
 
 usage() {
 cat <<EOF
 USAGE: 
-$0 [command]
+pii_redactor [command] ... <directory>
 
 COMMANDS:
-  redact                Redact PII in rke/cluster
+  <directory>   Redacts PII in directory holding cluster.yml
 
 GLOBAL COMMANDS:
   -h, --help            Show this message
@@ -35,25 +36,33 @@ GLOBAL COMMANDS:
 EOF
 }
 
-case ${1} in 
-  -h|--help) 
-    usage
-    ;;
-  -d|--debug)
-    debug=1
-    echo "Debug is on"
-    ;;   
-  -v|--verbose)
-    verbose=1
-    echo "Verbose is on"
-    ;;
-  -ver|--version)
-    echo "PII_Redaction.sh version is ${version}"
-    ;;
-  redact)
-    sedcom
-    ;;
-  *) 
-   echo "Invalid Input"
-   ;;
-esac
+while [ ${#} -gt 0 ]
+do
+  a=${1}
+  shift
+  case ${a} in 
+    -h|--help) 
+      usage
+      ;;
+    -d|--debug)
+      debug=1
+      echo "Debug is on"
+     ;;   
+    -v|--verbose)
+      verbose=1
+      echo "Verbose is on"
+      ;;
+    -ver|--version)
+      echo "pii_redactor.sh version is ${version}"
+      ;;
+    redact)
+      sedcom
+      echo "Redacting File"
+      ;;
+    $dir)
+      ;;
+    *) 
+     echo "Invalid Input. Try --help or -h"
+     ;;
+  esac
+done
