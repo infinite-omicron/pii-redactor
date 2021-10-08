@@ -4,7 +4,6 @@ set -eu
 version="0.0.1"
 
 dir=$2
-yml=$(find $dir -name "cluster.yml")
 REDACT="**********"
 debug=0
 verbose=0
@@ -12,7 +11,7 @@ verbose=0
 
 # official version will write to actual .yml
 
-yml=$(find -name "cluster.yml") 
+yml=$(find "$dir" -name "cluster.yml") 
 sed -e "s/\(address: \)\(.*\)/\1$REDACT/;
 s/\(user: \)\(.*\)/\1$REDACT/;
 s/\(ssh_key_path: \)\(.*\)/\1$REDACT/;
