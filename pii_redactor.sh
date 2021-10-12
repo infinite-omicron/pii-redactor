@@ -1,17 +1,16 @@
 #!/bin/bash
 set -eu
+
 # variables in use
 version="0.0.1"
-
-dir=$2
 REDACT="**********"
 debug=0
 verbose=0
+dir=$1
 
-
+if [ -d $dir ]; then
+yml=$(find $dir -name "cluster.yml")
 # official version will write to actual .yml
-
-yml=$(find "$dir" -name "cluster.yml") 
 sed -e "s/\(address: \)\(.*\)/\1$REDACT/;
 s/\(user: \)\(.*\)/\1$REDACT/;
 s/\(ssh_key_path: \)\(.*\)/\1$REDACT/;
@@ -20,15 +19,12 @@ s/\(hostname_override: \)\(.*\)/\1$REDACT/;
 s/\(internal_address: \)\(.*\)/\1$REDACT/;
 1,/ key:.*/{s// key: $REDACT/};
 /-----BEGIN/,/-----END/{/-----BEGIN/n;/-----END/!{s/./        $REDACT/}};" $yml > redacted_clus.yml
-
+fi
 
 usage() {
 cat <<EOF
 USAGE: 
-pii_redactor [command] ... <directory>
-
-COMMANDS:
-  <directory>   Redacts PII in directory holding cluster.yml
+pii_redactor [command] || <directory that holds cluster.yml>
 
 GLOBAL COMMANDS:
   -h, --help            Show this message
@@ -57,12 +53,9 @@ do
     -ver|--version)
       echo "pii_redactor.sh version is ${version}"
       ;;
-    redact)
-      sedcom
-      echo "Redacting File"
-      ;;
     $dir)
-      ;;
+     echo "Success"
+      ;; 
     *) 
      echo "Invalid Input. Try --help or -h"
      ;;
