@@ -8,17 +8,17 @@ debug=0
 verbose=0
 dir=$1
 
-if [ -d $dir ]; then
-yml=$(find $dir -name "cluster.yml")
+if [ -d "$dir" ]; then
+yml=$(find "$dir" -name "cluster.yml")
 # official version will write to actual .yml
-sed -e "s/\(address: \)\(.*\)/\1$REDACT/;
+sed -i "s/\(address: \)\(.*\)/\1$REDACT/;
 s/\(user: \)\(.*\)/\1$REDACT/;
 s/\(ssh_key_path: \)\(.*\)/\1$REDACT/;
 s/\(ssh_cert_path: \)\(.*\)/\1$REDACT/;
 s/\(hostname_override: \)\(.*\)/\1$REDACT/;
 s/\(internal_address: \)\(.*\)/\1$REDACT/;
 1,/ key:.*/{s// key: $REDACT/};
-/-----BEGIN/,/-----END/{/-----BEGIN/n;/-----END/!{s/./        $REDACT/}};" $yml > redacted_clus.yml
+/-----BEGIN/,/-----END/{/-----BEGIN/n;/-----END/!{s/./        $REDACT/}};" "$yml"
 fi
 
 usage() {
@@ -53,7 +53,7 @@ do
     -ver|--version)
       echo "pii_redactor.sh version is ${version}"
       ;;
-    $dir)
+    "$dir")
      echo "Success"
       ;; 
     *) 
