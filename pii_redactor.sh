@@ -6,7 +6,7 @@ version="0.0.1"
 REDACT="**********"
 debug=0
 verbose=0
-dir=$1
+dir=$@
 
 if [ -d "$dir" ]; then
 yml=$(find "$dir" -name "cluster.yml")
@@ -19,6 +19,9 @@ s/\(hostname_override: \)\(.*\)/\1$REDACT/;
 s/\(internal_address: \)\(.*\)/\1$REDACT/;
 1,/ key:.*/{s// key: $REDACT/};
 /-----BEGIN/,/-----END/{/-----BEGIN/n;/-----END/!{s/./        $REDACT/}};" "$yml"
+echo "Success"
+else
+echo "Could not find file."
 fi
 
 usage() {
@@ -54,7 +57,6 @@ do
       echo "pii_redactor.sh version is ${version}"
       ;;
     "$dir")
-     echo "Success"
       ;; 
     *) 
      echo "Invalid Input. Try --help or -h"
